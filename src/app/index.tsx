@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
         lineHeight: 32,
         fontWeight: 'bold',
         color: '#ffffff'
+        
     },
     memoListItem :{
         backgroundColor: '#ffffff',
