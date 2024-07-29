@@ -14,6 +14,7 @@ const List = (): JSX.Element => {
             <MemoListItem />
             <MemoListItem />
             <MemoListItem />
+            
         </View>
 
         <CircleButton>+</CircleButton>
