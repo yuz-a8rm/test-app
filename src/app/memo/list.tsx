@@ -1,20 +1,31 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 
-import Header from "../../components/header";
 import MemoListItem from "../../components/MemoListItem";
 import CircleButton from "../../components/CircleButton";
 import Icon from "../../components/icon";
+import { router, useNavigation } from "expo-router";
+import { useEffect } from "react";
+import LogOutButton from "../../components/LogOutButton";
+
+const hadlePress = ():void => {
+    router.push('/memo/create')
+}
 
 const List = (): JSX.Element => {
+    const navigation = useNavigation()
+    useEffect(() => {
+        navigation.setOptions({
+            headerRight: () => { return <LogOutButton /> }
+        })
+        }, [])
     return (
         <View style={styles.container}>
-        <Header />
         <View>
             <MemoListItem />
             <MemoListItem />
             <MemoListItem />
         </View>
-        <CircleButton>
+        <CircleButton onPress={hadlePress}>
             <Icon name='plus' size={40} color='#ffffff' />
         </CircleButton>
         </View>
