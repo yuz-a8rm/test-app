@@ -56,7 +56,7 @@ const SignUp = (): JSX.Element => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flex: 1.0,
         backgroundColor: '#F0F4F8'
     },
     inner: {
