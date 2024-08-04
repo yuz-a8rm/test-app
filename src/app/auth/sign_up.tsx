@@ -1,14 +1,24 @@
-import { View, Text, TouchableOpacity, TextInput, StyleSheet } from "react-native";
+import { View, Alert, Text, TouchableOpacity, TextInput, StyleSheet } from "react-native";
 import { useState } from "react";
 
 import { Link, router } from "expo-router";
-
+import { auth } from "../../config";
 import Button from "../../components/Button";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
-
-const handlePress = (): void => {
+const handlePress = (email:string, password:string): void => {
     // 会員登録
+    console.log(email, password)
+    createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {       
+    console.log(userCredential.user.uid)
     router.replace('/memo/list')
+    })
+    .catch((error) => {
+        const { code, message } = error
+        console.log(error)
+        Alert.alert(message)
+    })
 }
 
 const SignUp = (): JSX.Element => {
@@ -39,11 +49,11 @@ const SignUp = (): JSX.Element => {
                 textContentType="password"
                 />
 
-                <Button label = 'Submit' onPress={handlePress} />
+                <Button label = 'Submit' onPress={() => { handlePress(email, password) }} />
                 
                 <View style={styles.footer}>
                     <Text style={styles.footerText}>Already registered?</Text>
-                    <Link href='/auth/log_in' asChild>
+                    <Link href='/auth/log_in' asChild replace>
                         <TouchableOpacity>
                             <Text style={styles.footerLink}>Log in</Text>
                         </TouchableOpacity>
@@ -56,7 +66,7 @@ const SignUp = (): JSX.Element => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flex: 1.0,
         backgroundColor: '#F0F4F8'
     },
     inner: {
