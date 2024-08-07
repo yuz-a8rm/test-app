@@ -10,7 +10,7 @@ import { db, auth } from "../../config";
 import { useState } from "react";
 
 const handlePress = (bodyText: string): void => {
-    if (auth.currentUser === null ) {return}
+    if (auth.currentUser === null ) { return }
     const ref = collection(db, `users/${auth.currentUser.uid}/memos`)
     addDoc(ref, {
         bodyText,

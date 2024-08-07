@@ -3,13 +3,27 @@ import { View, Text, StyleSheet, ScrollView } from "react-native";
 import CircleButton from "../../components/CircleButton";
 import Icon from "../../components/icon";
 
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
+import { onSnapshot, doc } from "firebase/firestore";
+import { auth, db } from "../../config";
+import { useEffect, useState } from "react";
+import { type Memo } from "../../../types/memo";
 
 const handlePress = ():void => {
     router.push('/memo/edit')
 }
 
 const Detail = (): JSX.Element => {
+    const { id } = useLocalSearchParams()
+    console.log(id)
+    const [memo, setMemo] = useState<Memo | null>(null)
+    useEffect(() => {
+        if (auth.currentUser === null) { return }
+        const ref = doc(db, `users/${auth.currentUser.uid}/memos` , String(id))
+        onSnapshot(ref, (memoDoc) => {
+            console.log(memoDoc.data())
+        })
+    }, [])
     return (
         <View style={styles.container}>
             <View style={styles.memoHeader}>
